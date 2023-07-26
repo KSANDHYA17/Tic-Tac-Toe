@@ -18,17 +18,17 @@ def printBoard(board):
 def playerInput(board):
     while True:
         if currentPlayer == "X":
-            inp = int(input(f"Enter a number 1-9 \033[1;34m Player (X) \033[0;0m : "))
+            inp = int(input(f"Enter a number 1-9 : "))
         else:
-            inp = int(input(f"Enter a number 1-9 \033[1;31m Player (0) \033[0;0m : "))
+            inp = int(input(f"Enter a number 1-9 : "))
         if inp >= 1 and inp <= 9 and board[inp-1] == "-":
             board[inp-1] = currentPlayer
             break
         else:
             if currentPlayer == "X":
-                print(f"Oops! Try again! Player - \033[1;34m Player (X) \033[0;0m ! ")
+                print(f"Oops! Try again! Player - ")
             else:
-                print(f"Oops! Try again! Player - \033[1;31m Player (0) \033[0;0m ! ")
+                print(f"Oops! Try again! Player - ")
             printBoard(board)
 
 
