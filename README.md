@@ -1,46 +1,25 @@
 # Tic-Tac-Toe
-The algorithm for the Tic-Tac-Toe game code:
 
-1. Define a function `p_board(board)` that takes the current state of the board as input and prints it.
+1. The `board` is represented as a list of length 9, where each element represents a cell on the Tic-Tac-Toe board. Initially, all cells are set to "-". This will be used to track the current state of the game.
 
-2. Define a function `c_winner(board)` that takes the current state of the board as input and checks for a winner.
+2. `currentPlayer` variable is initialized to "X", indicating that "X" will be the first player to make a move.
 
-   a. Check rows:
-      - For each row in the board:
-        - If the first element of the row is equal to the second and third elements, and not an empty space, return the first element as the winner.
+3. The `winner` variable is initialized to `None`. It will be used to track the winner of the game.
 
-   b. Check columns:
-      - For each column in the board:
-        - If the first element of the column is equal to the second and third elements, and not an empty space, return the first element as the winner.
+4. `gameRunning` is set to `True` to indicate that the game is ongoing.
 
-   c. Check diagonals:
-      - If the first element of the top-left to bottom-right diagonal is equal to the second and third elements, and not an empty space, return the first element as the winner.
-      - If the first element of the top-right to bottom-left diagonal is equal to the second and third elements, and not an empty space, return the first element as the winner.
+5. The `printBoard()` function is defined to display the current state of the Tic-Tac-Toe board.
 
-   d. If no winner is found, return `None`.
+6. The `playerInput()` function is defined to take input from the current player and update the board based on their move. It validates the input and ensures that the move is valid.
 
-3. Define a function `play_game()` that controls the gameplay.
+7. Three functions, `checkHorizontal()`, `checkRow()`, and `checkDiagonal()`, are defined to check for a win condition. If any of these functions return `True`, the game is won by the current player, and the `winner` variable is updated accordingly.
 
-   a. Initialize the board as a 3x3 grid with empty spaces.
+8. The `checkTie()` function checks if the game is a tie, i.e., if no more moves are possible, and none of the players has won. If the game is a tie, it displays the board and prints a message indicating a tie.
 
-   b. Set the initial player as 'X' and the winner as `None`.
+9. The `checkWin()` function calls the win-checking functions and determines if the current player has won the game. If there is a winner, it displays a message indicating the winner.
 
-   c. Start a game loop that continues until there is a winner.
+10. The `switchPlayer()` function switches the value of `currentPlayer`, i.e., from "X" to "O" or from "O" to "X", so that the next player can make their move.
 
-      i. Print the current state of the board using `p_board(board)`.
+11. The main game loop starts with `while gameRunning:`. Inside the loop, it prints the board, takes input from the current player, checks for a win or tie condition, and switches the player. The loop continues until `gameRunning` is set to `False` (which happens when there is a winner or the game is a tie).
 
-      ii. Prompt the current player to enter their move by providing the row and column numbers.
-
-      iii. Check if the chosen cell is already occupied. If it is, print an error message and continue to the next iteration of the loop.
-
-      iv. If the chosen cell is valid, update the board by assigning the current player's symbol to the corresponding cell.
-
-      v. Check for a winner by calling `c_winner(board)`. If a winner is found, assign the winner's symbol to the `winner` variable and break the game loop.
-
-      vi. Switch the current player. If it is 'X', change it to 'O', and vice versa.
-
-   d. After the game loop ends, print the final state of the board and display the winner.
-
-4. Call the `play_game()` function to start the game.
-
-That's the algorithm for the Tic-Tac-Toe game code. It outlines the steps involved in playing the game and determining the winner.
+Overall, this code allows two players to play Tic-Tac-Toe game. It takes player input, displays the board after each move, checks for a win or tie condition, and announces the winner or tie when the game ends.
