@@ -1,57 +1,81 @@
-def p_board(board):
-    for row in board:
-        print(' | '.join(row))
-        print('-' * 9)
+board = ['-', '-', '-',
+        '-', '-', '-',
+        '-', '-', '-']
+currentPlayer = "X"
+winner = None
+gameRunning = True
 
-def c_winner(board):
-    # Check rows
-    for row in board:
-        if row[0] == row[1] == row[2] != ' ':
-            return row[0]
+#printing board
 
-    # Check columns
-    for col in range(3):
-        if board[0][col] == board[1][col] == board[2][col] != ' ':
-            return board[0][col]
+def printBoard(board):
+    print(board[0] + " | " + board[1] + " | " + board[2])
+    print("-" * 9)
+    print(board[3] + " | " + board[4] + " | " + board[5])
+    print("-" * 9)
+    print(board[6] + " | " + board[7] + " | " + board[8])
 
-    # Check diagonals
-    if board[0][0] == board[1][1] == board[2][2] != ' ':
-        return board[0][0]
-    if board[0][2] == board[1][1] == board[2][0] != ' ':
-        return board[0][2]
+#take player input
+def playerInput(board):
+    while True:
+        if currentPlayer == "X":
+            inp = int(input(f"Enter a number 1-9 \033[1;34m Player (X) \033[0;0m : "))
+        else:
+            inp = int(input(f"Enter a number 1-9 \033[1;31m Player (0) \033[0;0m : "))
+        if inp >= 1 and inp <= 9 and board[inp-1] == "-":
+            board[inp-1] = currentPlayer
+            break
+        else:
+            if currentPlayer == "X":
+                print(f"Oops! Try again! Player - \033[1;34m Player (X) \033[0;0m ! ")
+            else:
+                print(f"Oops! Try again! Player - \033[1;31m Player (0) \033[0;0m ! ")
+            printBoard(board)
 
-    return None
 
-def play_game():
-    board = [[' ', ' ', ' '],
-             [' ', ' ', ' '],
-             [' ', ' ', ' ']]
+#check for win or tie
+def checkHorizontal(board):
+    global winner
+    if (board[0] == board[1] == board[2] and board[0] != "-") or (board[3] == board[4] == board[5] and board[3] != "-") or (board[6] == board[7] == board[8] and board[6] != "-"):
+        winner = currentPlayer
+        return True
+def checkRow(board):
+    global winner
+    if (board[0] == board[3] == board[6] and board[0] != "-") or (board[1] == board[4] == board[7] and board[1] != "-") or (board[2] == board[5] == board[8] and board[2] != "-"):
+        winner = currentPlayer
+        return True
+def checkDiagonal(board):
+    global winner
+    if (board[0] == board[4] == board[5] and board[0] != "-") or (board[2] == board[4] == board[6] and board[2] != "-"):
+        winner = currentPlayer
+        return True
+def checkTie(board):
+    global gameRunning
+    if "-" not in board:
+        printBoard(board)
+        print("Its a tie")
+        gameRunning = False
 
-    c_player = 'X'
-    winner = None
+def checkWin():
+    if checkDiagonal(board) or checkHorizontal(board) or checkRow(board):
+        print(f"The winner is {winner}")
 
-    while not winner:
-        p_board(board)
+#switch the player
+def switchPlayer():
+    global currentPlayer
+    if currentPlayer == "X":
+        currentPlayer = "O"
+    else:
+        currentPlayer = "X"
 
-        # Get player's move
-        row = int(input("Enter the row (0-2): "))
-        col = int(input("Enter the column (0-2): "))
 
-        # Check if the move is valid
-        if board[row][col] != ' ':
-            print("Invalid move. Try again.")
-            continue
 
-        # Update the board
-        board[row][col] = c_player
+#check for win or tie again
 
-        # Check for a winner
-        winner = c_winner(board)
-
-        # Switch players
-        c_player = 'O' if c_player == 'X' else 'X'
-
-    p_board(board)
-    print(f"Player {winner} wins!")
-
-play_game()
+while gameRunning:
+    printBoard(board)
+    if winner != None:
+        break
+    playerInput(board)
+    checkWin()
+    checkTie(board)
+    switchPlayer()
